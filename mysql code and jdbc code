@@ -1,0 +1,162 @@
+JAVA CODE
+
+
+INSERTING INTO TABLE
+
+import="moviedatabase.ConnectionProvider"
+import="java.sql.*"
+
+String name=request.getParameter("name");
+String mobilenumber=request.getParameter("mobilenumber");
+String gender=request.getParameter("gender");
+String actor id=request.getParameter("actor id");
+try
+{
+	Connection con=ConnectionProvider.getCon();
+	PreparedStatement ps=con.prepareStatement("insert into actor values(?,?,?,?)");
+	ps.setString(1,actor id);
+  ps.setString(2,name);
+	ps.setString(3,mobilenumber);
+	ps.setString(4,gender);
+  ps.executeUpdate();
+    }
+
+
+UPDATE THE TABLE
+
+import="moviedatabase.ConnectionProvider"
+import="java.sql.*"
+
+String email=request.getParameter("actor id");
+String name=request.getParameter("name");
+String mobilenumber=request.getParameter("mobilenumber");
+String father=request.getParameter("gender");
+
+
+try
+{
+	Connection con=ConnectionProvider.getCon();
+	PreparedStatement ps=con.prepareStatement("update actor set actor id=?,name=?,mobilenumber=?,gender=? where id=?");
+	ps.setString(1,actor id);
+	ps.setString(2,name);
+	ps.setString(3,mobilenumber);
+	ps.setString(4,gender);
+	ps.setString(5,id);
+	ps.executeUpdate();
+	response.sendRedirect("editDeleteList.jsp?msg=valid");
+	}
+
+
+
+
+
+
+
+MYSQL CODE
+
+
+CREATE TABLE ACTOR (
+    ACTID NUMERIC(3),
+    ACTNAME VARCHAR(20),
+    ACTGENDER char(1),
+    PRIMARY KEY (ACTID)
+);
+CREATE TABLE DIRECTOR (
+    DIRID NUMERIC(3),
+    DIRNAME VARCHAR(20),
+    DIRPHONE NUMERIC(10),
+    PRIMARY KEY (DIRID)
+);
+
+
+CREATE TABLE MOVIES (
+    MOVID NUMERIC(4),
+    MOVTITLE VARCHAR(25),
+    MOVYEAR NUMERIC(4),
+    MOVLANG VARCHAR(12),
+    DIRID NUMERIC(3),
+    PRIMARY KEY (MOVID),
+    FOREIGN KEY (DIRID)
+        REFERENCES DIRECTOR (DIRID)
+);
+
+
+
+
+CREATE TABLE MOVIECAST (
+    ACTID NUMERIC(3),
+    MOVID NUMERIC(4),
+    ROLE VARCHAR(10),
+    PRIMARY KEY (ACTID , MOVID),
+    FOREIGN KEY (ACTID)
+        REFERENCES ACTOR (ACTID),
+    FOREIGN KEY (MOVID)
+        REFERENCES MOVIES (MOVID)
+);
+
+
+
+
+CREATE TABLE RATING (
+    MOVID NUMERIC(4),
+    REVSTARS VARCHAR(25),
+    PRIMARY KEY (MOVID),
+    FOREIGN KEY (MOVID)
+        REFERENCES MOVIES (MOVID)
+);
+
+
+
+INSERT INTO ACTOR VALUES(1,'ANUSHKA','F');
+INSERT INTO ACTOR VALUES(2,'PRABHAS','M');
+INSERT INTO ACTOR VALUES(3,'nani','M');
+INSERT INTO ACTOR VALUES(4,'SUDEEP','M');
+INSERT INTO ACTOR VALUES(5,'yash','M');
+INSERT INTO ACTOR VALUES(6,'ntr','M');
+INSERT INTO ACTOR VALUES(7,'mahesh babu','M');
+INSERT INTO ACTOR VALUES(8,'samantha','F');
+
+SELECT * FROM ACTOR;
+
+
+INSERT INTO DIRECTOR VALUES(60,'RAJAMOULI',9191919191);
+INSERT INTO DIRECTOR VALUES(61,'koratala siva',818181818);
+INSERT INTO DIRECTOR VALUES(62,'sekhar kammula',7171717171);
+INSERT INTO DIRECTOR VALUES(63,'trivikram srinivas',6161616161);
+INSERT INTO DIRECTOR VALUES(64,'krish jagarlamudi',5151515151);
+INSERT INTO DIRECTOR VALUES(65,'puri jagannadh',4141414141);
+
+SELECT * FROM DIRECTOR;
+
+
+INSERT INTO MOVIES VALUES(1001,'BAHUBALI-2',2017,'TELUGU',60);
+INSERT INTO MOVIES VALUES(1002,'BAHUBALI-1',2015,'TELUGU',60);
+INSERT INTO MOVIES VALUES(1003,'ega',2008,'TELUGU',60);
+INSERT INTO MOVIES VALUES(1004,'SRIMANTHUDU',2015,'TELUGU',61);
+
+SELECT * FROM MOVIES;
+
+
+INSERT INTO MOVIECAST VALUES(1,1002,'HEROINE');
+INSERT INTO MOVIECAST VALUES(1,1001,'HEROINE');
+INSERT INTO MOVIECAST VALUES(3,1003,'HERO');
+INSERT INTO MOVIECAST VALUES(4,1002,'GUEST');
+INSERT INTO MOVIECAST VALUES(7,1004,'HERO');
+
+SELECT * FROM MOVIECAST;
+
+
+INSERT INTO RATING VALUES(1001,4);
+INSERT INTO RATING VALUES(1002,4.5);
+INSERT INTO RATING VALUES(1003,5);
+INSERT INTO RATING VALUES(1004,4);
+
+SELECT * FROM RATING;
+
+
+
+
+
+
+
+
